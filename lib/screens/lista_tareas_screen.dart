@@ -8,16 +8,22 @@ class ListaTareas extends StatefulWidget {
 }
 
 class _ListaTareasState extends State<ListaTareas> {
-  final List<String> _tareas = [];
+  final List<Map<String, dynamic>> _tareas = [];
   final TextEditingController _controller = TextEditingController();
 
   void _agregarTarea(){
     if (_controller.text.isNotEmpty){
       setState(() {
-        _tareas.add(_controller.text);
+        _tareas.add({'text': _controller.text, 'completed': false});
         _controller.clear();
       });
     }
+  }
+
+  void toggleTask(int index) {
+    setState(() {
+      _tareas[index]['completed'] = !_tareas[index]['completed'];
+    });
   }
 
   void _eliminarTarea(int index){
@@ -30,13 +36,18 @@ class _ListaTareasState extends State<ListaTareas> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Lista de Tareas'),
+        title: Text('MiwelCoding', style: TextStyle(fontWeight: FontWeight.bold)),
         backgroundColor: Colors.cyan,
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text('Tareas de Miwel', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+            ),
+            SizedBox(height: 20),
             TextField(
               controller: _controller,
               decoration: InputDecoration(
@@ -44,7 +55,7 @@ class _ListaTareasState extends State<ListaTareas> {
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 20),
             SizedBox(
               height: 50,
               width: 150,
@@ -55,9 +66,29 @@ class _ListaTareasState extends State<ListaTareas> {
               child: ListView.builder(
                 itemCount: _tareas.length,
                 itemBuilder: (context, index){
+                  final tarea = _tareas[index];
                   return ListTile(
-                    title: Text(_tareas[index]),
-                    trailing: IconButton(icon: Icon(Icons.delete), onPressed: () => _eliminarTarea(index)),
+                    title: Text(
+                      tarea['text'],
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        decoration:
+                          tarea['completed'] ? TextDecoration.lineThrough : null,
+                        color: tarea['completed'] ? Colors.grey : Colors.white,
+                      ),
+                    ),
+                    leading: IconButton(
+                    icon: Icon(
+                      tarea['completed']
+                          ? Icons.check_circle
+                          : Icons.radio_button_unchecked,
+                      color:
+                          tarea['completed'] ? Colors.greenAccent : Colors.white,
+                      ),
+                      onPressed: () => toggleTask(index),
+                    ),
+                    trailing: IconButton(icon: Icon(Icons.delete_outline, color: Colors.redAccent,), onPressed: () => _eliminarTarea(index)),
                   );
                 }
                 ),
