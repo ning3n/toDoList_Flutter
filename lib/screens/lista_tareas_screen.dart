@@ -31,6 +31,7 @@ class _ListaTareasState extends State<ListaTareas> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Lista de Tareas'),
+        backgroundColor: Colors.cyan,
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),

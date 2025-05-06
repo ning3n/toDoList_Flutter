@@ -12,6 +12,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Lista de Tareas (To Do List)',
+      theme: ThemeData.dark(),
       home: ListaTareas(),
     );
   }
