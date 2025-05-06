@@ -45,7 +45,11 @@ class _ListaTareasState extends State<ListaTareas> {
               ),
             ),
             SizedBox(height: 10),
-            ElevatedButton(onPressed: _agregarTarea, child: Text('Agregar')),
+            SizedBox(
+              height: 50,
+              width: 150,
+              child: ElevatedButton(onPressed: _agregarTarea, style:ElevatedButton.styleFrom(backgroundColor: Colors.pinkAccent, foregroundColor: Colors.white), child: Text('AGREGAR', style: TextStyle(fontWeight: FontWeight.bold),))
+            ),
             SizedBox(height: 20),
             Expanded(
               child: ListView.builder(
@@ -53,7 +57,7 @@ class _ListaTareasState extends State<ListaTareas> {
                 itemBuilder: (context, index){
                   return ListTile(
                     title: Text(_tareas[index]),
-                    trailing: IconButton(icon: Icon(Icons.delete), onPressed: () => _eliminarTarea(index))
+                    trailing: IconButton(icon: Icon(Icons.delete), onPressed: () => _eliminarTarea(index)),
                   );
                 }
                 ),
